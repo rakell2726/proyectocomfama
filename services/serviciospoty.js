@@ -9,7 +9,7 @@ const URI='https://api.spotify.com/v1/artists/3YcBF2ttyueytpXtEzn1Za/top-tracks?
 const PETICION={
     method:'GET',
     headers:{
-        Authorization:'Bearer BQBIH69hCqZ7ePp-zv2kEWN0BT6H1fayfrVaNTOMn038QThgDaCPhTxNSrTGhVmHQYihXCYlG2kWSF3Wj_Q9jgSkhNhfg8VvxjRX4XmzCpnOGJUyIvuhAfjWw6UtibkQElOx1lak_5CtU31RIgb4mUQdr7a5afPP8MChJeG-eQwPSK-vjL4'
+        Authorization:'Bearer BQDTC9u02eFGI0EYO_eC0oK8GtS4IUtM0-Po1cwNSq4Tr1COD1JucxnETSgxgpJRe87QKp4nhbhTWqMYcyzbrjYoGJZjvHcsM4E0R003GVzA-khO5HQeobgzCyZN-DJINEXkKz8NReeCyW0Q3WKYDAkbE7Cr-8FcZd6JieoNRn_1mF5-qTk'
     }
 }
 
@@ -24,10 +24,55 @@ fetch(URI,PETICION)
 .then(function(respuesta){
     console.log(respuesta)//objeto
     console.log(respuesta.tracks)//arreglo
-    respuesta.tracks.forEach(function(cancion){
-        console.log(cancion.preview_url)
-    })
+    pintarCanciones(respuesta.tracks)
 }) //hago lo que quiera con la respuesta
 .catch(function(respuesta){
     console.log(respuesta)
 })
+
+
+
+//FUNCION PARA PINTAR DATOS
+function pintarCanciones(canciones){
+
+    //pasos para pintar hacer renden en la GUI
+
+    //1 CREO UNA REFERENCIA A LA BASE SOBRE LA CUAL
+    //VOY A PINTAR
+    let fila=document.getElementById("fila")
+
+    //2. RECORRER LOS DATOS QUE ME LLEGAN
+    canciones.forEach(function(cancion){
+       
+        //APLICANDO TRAVERSING ()
+        //2.1 creando columnas
+        let columna=document.createElement("div")
+        columna.classList.add("col")
+
+        //2.2 creando la tarjeta
+        let tarjeta=document.createElement("div")
+        tarjeta.classList.add("card","h-100")
+
+        //2.3 creando el audio
+        let cancionaudio=document.createElement("audio")
+        cancionaudio.classList.add("w-100")
+        cancionaudio.src=cancion.preview_url
+        cancionaudio.setAttribute("controls","controls")
+
+        //2.4 crando el nombre de la cancion
+        let nombreCancion=document.createElement("h3")
+        nombreCancion.classList.add("text-center")
+        nombreCancion.textContent=cancion.name
+
+        //FINAL DEFINO JERARQUIAS (PADRES E HIJOS)
+        
+        tarjeta.appendChild(nombreCancion)
+        tarjeta.appendChild(cancionaudio)
+        columna.appendChild(tarjeta)
+        fila.appendChild(columna)
+        
+
+
+    })
+
+}
