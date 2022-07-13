@@ -4,6 +4,8 @@
 //LA URI DEL SERVICIO
 const URI='https://api.spotify.com/v1/artists/3YcBF2ttyueytpXtEzn1Za/top-tracks?market=US'
 
+const URI2='https://api.spotify.com/v1/artists/5VQCk9RiLwri99OgOT34kq/top-tracks?market=US'
+
 //2. A HACER QUE OME?
 //CONFIGURO LA PETICION
 const PETICION={
@@ -17,7 +19,7 @@ const PETICION={
 //CONSUMA EL API
 
 //promesa (funcion asincrona)
-fetch(URI,PETICION)
+fetch(URI2,PETICION)
 .then(function(respuesta){
     return respuesta.json() //aseguro del formato de respuesta
 })
@@ -51,11 +53,11 @@ function pintarCanciones(canciones){
 
         //2.2 creando la tarjeta
         let tarjeta=document.createElement("div")
-        tarjeta.classList.add("card","h-100")
+        tarjeta.classList.add("card","h-100","shadow")
 
         //2.3 creando el audio
         let cancionaudio=document.createElement("audio")
-        cancionaudio.classList.add("w-100")
+        cancionaudio.classList.add("w-100","mt-3")
         cancionaudio.src=cancion.preview_url
         cancionaudio.setAttribute("controls","controls")
 
@@ -64,9 +66,21 @@ function pintarCanciones(canciones){
         nombreCancion.classList.add("text-center")
         nombreCancion.textContent=cancion.name
 
+        //2.5 creando la foto del album
+        let fotoAlbum=document.createElement("img")
+        fotoAlbum.classList.add("img-fluid","w-100","h-100")
+        fotoAlbum.src=cancion.album.images[0].url
+
+        //2.6 creando popularidad
+        let popularidad=document.createElement("h4")
+        popularidad.classList.add("text-center","fw-bold","mt-5")
+        popularidad.textContent='Popularidad: '+cancion.popularity
+
         //FINAL DEFINO JERARQUIAS (PADRES E HIJOS)
         
         tarjeta.appendChild(nombreCancion)
+        tarjeta.appendChild(fotoAlbum)
+        tarjeta.appendChild(popularidad)
         tarjeta.appendChild(cancionaudio)
         columna.appendChild(tarjeta)
         fila.appendChild(columna)
