@@ -32,6 +32,8 @@ fetch(URI2,PETICION)
     console.log(respuesta)
 })
 
+console.log(respuesta)
+
 
 
 //FUNCION PARA PINTAR DATOS
